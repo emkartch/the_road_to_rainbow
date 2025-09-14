@@ -15,7 +15,7 @@ config/description="This example shows how to apply the State machine programmin
 pattern in GDscript, including Hierarchical States, and a
 pushdown automaton."
 config/tags=PackedStringArray("2d", "ai", "demo", "official")
-run/main_scene="res://Demo.tscn"
+run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.4")
 config/icon="res://icon.webp"
 

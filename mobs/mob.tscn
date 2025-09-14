@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://cibuy1na4hurw"]
+
+[ext_resource type="Texture2D" uid="uid://cyekm8csx33ng" path="res://mobs/mob_shadow.png" id="1_fgbma"]
+[ext_resource type="Script" uid="uid://cfdqudp47o2qw" path="res://mobs/mob.gd" id="1_p7hwu"]
+[ext_resource type="Texture2D" uid="uid://c47301t3nb2sx" path="res://mobs/mob_body.png" id="2_p7hwu"]
+
+[sub_resource type="Animation" id="Animation_fgbma"]
+resource_name = "mob_stagger"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyPivot/Body:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.0833333, 0.133333, 0.183333, 0.233333, 0.283333, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p7hwu"]
+_data = {
+&"mob_stagger": SubResource("Animation_fgbma")
+}
+
+[node name="Mob" type="CharacterBody2D"]
+script = ExtResource("1_p7hwu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.360784)
+position = Vector2(0, -4)
+texture = ExtResource("1_fgbma")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-25, 10, -25, -19, 25, -19, 25, 9)
+
+[node name="BodyPivot" type="Marker2D" parent="."]
+
+[node name="Body" type="Sprite2D" parent="BodyPivot"]
+position = Vector2(0, -22)
+texture = ExtResource("2_p7hwu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_p7hwu")
+}
