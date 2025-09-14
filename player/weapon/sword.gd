@@ -95,14 +95,15 @@ func set_ready_for_next_attack() -> void:
 	ready_for_next_attack = true
 
 
-func _on_body_entered(body: Node2D) -> void:
-	if not body.has_node("Health"):
-		return
-	if body.get_rid().get_id() in hit_objects:
-		return
+func _on_body_entered(body: CharacterBody2D) -> void:
+	if body.has_method("mob_take_damage"):
+		body.mob_take_damage()
+		#return
+	#if body.get_rid().get_id() in hit_objects:
+		#return
 
-	hit_objects.append(body.get_rid().get_id())
-	body.take_damage(self, attack_current["damage"], attack_current["effect"])
+	#hit_objects.append(body.get_rid().get_id())
+	#body.take_damage(self, attack_current["damage"], attack_current["effect"])
 
 
 func _on_animation_finished(_name: String) -> void:

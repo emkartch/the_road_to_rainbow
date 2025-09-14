@@ -1,10 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dmn8nkpogiwsf"]
+[gd_scene load_steps=13 format=3 uid="uid://dmn8nkpogiwsf"]
 
 [ext_resource type="PackedScene" uid="uid://bpdyvy2681m3i" path="res://player/player.tscn" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://q8chan1e2n18" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="FontFile" uid="uid://b5bspum6ffekd" path="res://fonts/SourceCodePro-Bold.ttf" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://cvi13chv8g4hj" path="res://debug/StatesStackDiplayer.tscn" id="3_7mycd"]
 [ext_resource type="PackedScene" uid="uid://bq6rrfy53rfvo" path="res://debug/ControlsPanel.tscn" id="4_272bh"]
-[ext_resource type="PackedScene" uid="uid://cibuy1na4hurw" path="res://mobs/mob.tscn" id="5_lquwl"]
 
 [sub_resource type="Animation" id="1"]
 
@@ -32,10 +32,21 @@ _data = {
 &"walk": SubResource("3")
 }
 
-[node name="Main" type="Node"]
+[sub_resource type="Curve2D" id="Curve2D_lquwl"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -640, -400, 0, 0, 0, 0, 640, -400, 0, 0, 0, 0, 640, 320, 0, 0, 0, 0, -640, 320, 0, 0, 0, 0, -640, -400)
+}
+point_count = 5
 
-[node name="Mob" parent="." instance=ExtResource("5_lquwl")]
-position = Vector2(380, 344)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(1294, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(20, 786)
+
+[node name="Main" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_lquwl")
 
 [node name="Player" parent="." instance=ExtResource("1_1bvp3")]
 position = Vector2(640, 400)
@@ -48,12 +59,16 @@ libraries = {
 &"": SubResource("AnimationLibrary_qbwwp")
 }
 
-[node name="CollisionPolygon2D" parent="Player" index="4"]
-polygon = PackedVector2Array(-25, 10, -25, -19, 25, -19, 25, 9)
-
 [node name="StateNameDisplayer" parent="Player" index="5"]
 physics_interpolation_mode = 1
 theme_override_fonts/font = ExtResource("2_lquwl")
+
+[node name="Path2D" type="Path2D" parent="Player"]
+curve = SubResource("Curve2D_lquwl")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(-640, -400)
 
 [node name="Explanations" type="RichTextLabel" parent="."]
 anchors_preset = 15
@@ -95,5 +110,24 @@ layout_mode = 0
 
 [node name="ControlsPanel" parent="Control" instance=ExtResource("4_272bh")]
 layout_mode = 1
+
+[node name="InvisibleWalls" type="StaticBody2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="InvisibleWalls"]
+position = Vector2(645, 730)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls"]
+position = Vector2(637, -10)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="InvisibleWalls"]
+position = Vector2(-11, 385)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="InvisibleWalls"]
+position = Vector2(1291, 346)
+shape = SubResource("RectangleShape2D_7mycd")
 
 [editable path="Player"]

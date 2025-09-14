@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cibuy1na4hurw"]
+[gd_scene load_steps=7 format=3 uid="uid://cibuy1na4hurw"]
 
 [ext_resource type="Texture2D" uid="uid://cyekm8csx33ng" path="res://mobs/mob_shadow.png" id="1_fgbma"]
 [ext_resource type="Script" uid="uid://cfdqudp47o2qw" path="res://mobs/mob.gd" id="1_p7hwu"]
 [ext_resource type="Texture2D" uid="uid://c47301t3nb2sx" path="res://mobs/mob_body.png" id="2_p7hwu"]
+
+[sub_resource type="GDScript" id="GDScript_p7hwu"]
+script/source = "extends Sprite2D
+"
 
 [sub_resource type="Animation" id="Animation_fgbma"]
 resource_name = "mob_stagger"
@@ -27,13 +31,16 @@ _data = {
 [node name="Mob" type="CharacterBody2D"]
 script = ExtResource("1_p7hwu")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Minion" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.360784)
 position = Vector2(0, -4)
 texture = ExtResource("1_fgbma")
+script = SubResource("GDScript_p7hwu")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-25, 10, -25, -19, 25, -19, 25, 9)
+position = Vector2(2.26498e-06, 2.03203)
+scale = Vector2(1.11111, 1.06641)
+polygon = PackedVector2Array(-27, 11, -27, -21, 27, -21, 27, 11)
 
 [node name="BodyPivot" type="Marker2D" parent="."]
 

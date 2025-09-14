@@ -13,9 +13,9 @@ func _physics_process(delta: float) -> void:
 	velocity = direction * speed
 	move_and_slide()
 	
-#func take_damage():
-	#%Slime.play_hurt()
-	#health -= 1
+func mob_take_damage():
+	$AnimationPlayer.play("mob_stagger")
+	health -= 1
 #
-	#if health == 0:
-		#queue_free()
+	if health == 0:
+		queue_free()

@@ -94,12 +94,14 @@ position = Vector2(0, -58)
 script = ExtResource("12")
 
 [node name="Offset" type="Marker2D" parent="BodyPivot/WeaponPivot"]
-position = Vector2(110, 0)
+position = Vector2(5, 0)
 
 [node name="Sword" parent="BodyPivot/WeaponPivot/Offset" instance=ExtResource("13")]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-20, 0, -20, -20, 20, -20, 20, 0)
+position = Vector2(2.26498e-06, -6.56639)
+scale = Vector2(1.11111, 1.38672)
+polygon = PackedVector2Array(-27, 14.831, -27, -21, 27, -21, 27, 14.831)
 
 [node name="StateNameDisplayer" type="Label" parent="."]
 offset_left = -109.0

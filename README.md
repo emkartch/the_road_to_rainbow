@@ -5,7 +5,11 @@ This is my game for the "Loop Implementation" assignment in ATLS 4140.
 9/14 – Added mobs that will follow and attack the player – 30 minutes – Followed tutorial:  
 https://www.youtube.com/watch?v=GwCiGixlqiU
 
+9/14 – Player able to attack mobs – 45 minutes – Followed tutorial:  
+https://www.youtube.com/watch?v=GwCiGixlqiU
+
 9/** - **Core Loop**: 
+Defeat enemy wave – Defeat boss – Level up
 
 9/** - **First Secondary Loop**: 
 
