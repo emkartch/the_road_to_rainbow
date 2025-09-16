@@ -28,10 +28,10 @@ _data = {
 &"mob_stagger": SubResource("Animation_fgbma")
 }
 
-[node name="Mob" type="CharacterBody2D"]
+[node name="Mob" type="CharacterBody2D" groups=["mobs"]]
 script = ExtResource("1_p7hwu")
 
-[node name="Minion" type="Sprite2D" parent="."]
+[node name="Shadow" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.360784)
 position = Vector2(0, -4)
 texture = ExtResource("1_fgbma")

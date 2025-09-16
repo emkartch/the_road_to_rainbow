@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bpdyvy2681m3i"]
+[gd_scene load_steps=18 format=3 uid="uid://bpdyvy2681m3i"]
 
 [ext_resource type="Script" uid="uid://clya0ymtv6cnn" path="res://player/player_controller.gd" id="1"]
 [ext_resource type="Script" uid="uid://bt4prj2loisak" path="res://player/player_state_machine.gd" id="2"]
@@ -10,10 +10,8 @@
 [ext_resource type="Script" uid="uid://badi2yipj0y74" path="res://player/states/die.gd" id="8"]
 [ext_resource type="Texture2D" uid="uid://eds33w28pilu" path="res://player/shadow.png" id="9"]
 [ext_resource type="Texture2D" uid="uid://ds53oxkqrcumd" path="res://player/body.png" id="10"]
-[ext_resource type="Script" uid="uid://duw4ejcjfrp7o" path="res://player/bullet/bullet_spawner.gd" id="11"]
 [ext_resource type="Script" uid="uid://d1hwnb818bhik" path="res://player/weapon/weapon_pivot.gd" id="12"]
 [ext_resource type="PackedScene" uid="uid://cdacdp11r3jua" path="res://player/weapon/Sword.tscn" id="13"]
-[ext_resource type="Script" uid="uid://dgpfeu3yan7hq" path="res://player/states/debug/state_name_displayer.gd" id="15"]
 
 [sub_resource type="Animation" id="1"]
 
@@ -40,6 +38,9 @@ _data = {
 &"stagger": SubResource("2"),
 &"walk": SubResource("3")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ebec5"]
+bg_color = Color(0.262643, 0.702466, 0.369465, 1)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1")
@@ -81,14 +82,6 @@ texture = ExtResource("9")
 position = Vector2(0, -58)
 texture = ExtResource("10")
 
-[node name="BulletSpawn" type="Node2D" parent="BodyPivot"]
-position = Vector2(0, -58)
-script = ExtResource("11")
-
-[node name="CooldownTimer" type="Timer" parent="BodyPivot/BulletSpawn"]
-wait_time = 0.2
-one_shot = true
-
 [node name="WeaponPivot" type="Marker2D" parent="BodyPivot"]
 position = Vector2(0, -58)
 script = ExtResource("12")
@@ -103,20 +96,32 @@ position = Vector2(2.26498e-06, -6.56639)
 scale = Vector2(1.11111, 1.38672)
 polygon = PackedVector2Array(-27, 14.831, -27, -21, 27, -21, 27, 14.831)
 
-[node name="StateNameDisplayer" type="Label" parent="."]
-offset_left = -109.0
-offset_top = -180.0
-offset_right = 110.0
-offset_bottom = -143.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 24
-text = "Idle"
-horizontal_alignment = 1
-uppercase = true
-script = ExtResource("15")
+[node name="HurtBox" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HurtBox"]
+position = Vector2(3.69549e-06, -6.37292)
+scale = Vector2(1.2037, 1.5001)
+polygon = PackedVector2Array(-27, 14.831, -27, -21, 27, -21, 27, 14.831)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -160.0
+offset_right = 50.0
+offset_bottom = -135.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_ebec5")
+value = 100.0
+fill_mode = 1
+show_percentage = false
 
 [connection signal="state_changed" from="StateMachine" to="BodyPivot/WeaponPivot/Offset/Sword" method="_on_StateMachine_state_changed"]
-[connection signal="state_changed" from="StateMachine" to="StateNameDisplayer" method="_on_StateMachine_state_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine" method="_on_animation_finished"]
 [connection signal="attack_finished" from="BodyPivot/WeaponPivot/Offset/Sword" to="StateMachine/Attack" method="_on_Sword_attack_finished"]
+[connection signal="body_entered" from="HurtBox" to="." method="_on_body_entered"]

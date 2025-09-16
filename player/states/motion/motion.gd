@@ -16,3 +16,4 @@ func get_input_direction() -> Vector2:
 func update_look_direction(direction: Vector2) -> void:
 	if direction and owner.look_direction != direction:
 		owner.look_direction = direction
+	Global.knockback = direction * 100

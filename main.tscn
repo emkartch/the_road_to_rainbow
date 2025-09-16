@@ -1,10 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://dmn8nkpogiwsf"]
+[gd_scene load_steps=11 format=3 uid="uid://dmn8nkpogiwsf"]
 
 [ext_resource type="PackedScene" uid="uid://bpdyvy2681m3i" path="res://player/player.tscn" id="1_1bvp3"]
 [ext_resource type="Script" uid="uid://q8chan1e2n18" path="res://main.gd" id="1_lquwl"]
-[ext_resource type="FontFile" uid="uid://b5bspum6ffekd" path="res://fonts/SourceCodePro-Bold.ttf" id="2_lquwl"]
-[ext_resource type="PackedScene" uid="uid://cvi13chv8g4hj" path="res://debug/StatesStackDiplayer.tscn" id="3_7mycd"]
-[ext_resource type="PackedScene" uid="uid://bq6rrfy53rfvo" path="res://debug/ControlsPanel.tscn" id="4_272bh"]
+[ext_resource type="PackedScene" uid="uid://ds8aae77ps3fc" path="res://hud.tscn" id="3_h2yge"]
 
 [sub_resource type="Animation" id="1"]
 
@@ -50,6 +48,7 @@ script = ExtResource("1_lquwl")
 
 [node name="Player" parent="." instance=ExtResource("1_1bvp3")]
 position = Vector2(640, 400)
+collision_mask = 3
 
 [node name="StateMachine" parent="Player" index="0"]
 start_state = NodePath("Idle")
@@ -59,10 +58,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_qbwwp")
 }
 
-[node name="StateNameDisplayer" parent="Player" index="5"]
-physics_interpolation_mode = 1
-theme_override_fonts/font = ExtResource("2_lquwl")
-
 [node name="Path2D" type="Path2D" parent="Player"]
 curve = SubResource("Curve2D_lquwl")
 
@@ -70,64 +65,32 @@ curve = SubResource("Curve2D_lquwl")
 unique_name_in_owner = true
 position = Vector2(-640, -400)
 
-[node name="Explanations" type="RichTextLabel" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = -370.0
-offset_right = -10.0
-offset_bottom = -730.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 4
-mouse_filter = 2
-bbcode_enabled = true
-text = "This example shows how to apply the State programming pattern in GDScript, including Hierarchical States, and a pushdown automaton.
-
-States are common in games. You can use the pattern to:
-
-1. Separate each behavior and transitions between behaviors, thus make scripts shorter and easier to manage.
-2. Respect the Single Responsibility Principle. Each State object represents one action.
-3. Improve your code's structure. Look at the scene tree and FileSystem tab: without looking at the code, you'll know what the Player can or cannot do.
-
-You can read more about States in the excellent Game Programming Patterns ebook."
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 7.0
-offset_top = 13.0
-offset_right = 7.0
-offset_bottom = 13.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="StatesStackDiplayer" parent="Control" instance=ExtResource("3_7mycd")]
-layout_mode = 0
-
-[node name="ControlsPanel" parent="Control" instance=ExtResource("4_272bh")]
-layout_mode = 1
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(640, 360)
 
 [node name="InvisibleWalls" type="StaticBody2D" parent="."]
 visible = false
+collision_layer = 2
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="InvisibleWalls"]
-position = Vector2(645, 730)
+position = Vector2(646, 730)
 shape = SubResource("RectangleShape2D_lquwl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls"]
-position = Vector2(637, -10)
+position = Vector2(637, -12)
 shape = SubResource("RectangleShape2D_lquwl")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="InvisibleWalls"]
-position = Vector2(-11, 385)
+position = Vector2(-12, 385)
 shape = SubResource("RectangleShape2D_7mycd")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="InvisibleWalls"]
-position = Vector2(1291, 346)
+position = Vector2(1292, 346)
 shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="HUD" parent="." instance=ExtResource("3_h2yge")]
+
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
 
 [editable path="Player"]
