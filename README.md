@@ -45,6 +45,8 @@ https://www.reddit.com/r/godot/comments/1b0vy14/how_to_add_knockback_to_a_player
 
 **Important Note**: As of 9/16, the name "The Road to Rainbow" won't currently make sense for the gameplay, but will make sense after more polish.
 
+9/17-9/19 – Worked with instructor to fix stagger animation overlap issues – 45 minutes
+
 Assets from:  
 
 - Godot Demo Projects Repo - https://github.com/godotengine/godot-demo-projects/tree/master  

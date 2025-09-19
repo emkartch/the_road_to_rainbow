@@ -9,6 +9,7 @@ signal health_depleted
 var screen_size # Size of the game window.
 var health = 100.0
 @onready var main = get_node("/root/Main")
+@onready var state_machine = get_node("/root/Main/Player/StateMachine")
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -36,7 +37,8 @@ func _on_body_entered(body: CharacterBody2D) -> void:
 	if body == self:
 		return
 	health -= 10
-	$AnimationPlayer.play("stagger")
+	#$AnimationPlayer.play("stagger")
+	$StaggerAnimator.play("stagger")
 	%HealthBar.value = health
 	if health <= 0.0:
 		hide() # Player disappears after being hit.

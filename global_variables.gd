@@ -1,3 +1,3 @@
 extends Node
 
-var knockback = 0
+var knockback = Vector2(10,10)

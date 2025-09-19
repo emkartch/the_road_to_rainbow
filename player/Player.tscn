@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bpdyvy2681m3i"]
+[gd_scene load_steps=18 format=3 uid="uid://i4jm6sckeneh"]
 
 [ext_resource type="Script" uid="uid://clya0ymtv6cnn" path="res://player/player_controller.gd" id="1"]
 [ext_resource type="Script" uid="uid://bt4prj2loisak" path="res://player/player_state_machine.gd" id="2"]
@@ -71,6 +71,11 @@ libraries = {
 &"": SubResource("AnimationLibrary_vi1hn")
 }
 
+[node name="StaggerAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vi1hn")
+}
+
 [node name="Shadow" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.361098)
 position = Vector2(0, -4)
@@ -123,5 +128,6 @@ show_percentage = false
 
 [connection signal="state_changed" from="StateMachine" to="BodyPivot/WeaponPivot/Offset/Sword" method="_on_StateMachine_state_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine" method="_on_animation_finished"]
+[connection signal="animation_finished" from="StaggerAnimator" to="StateMachine" method="_on_animation_finished"]
 [connection signal="attack_finished" from="BodyPivot/WeaponPivot/Offset/Sword" to="StateMachine/Attack" method="_on_Sword_attack_finished"]
 [connection signal="body_entered" from="HurtBox" to="." method="_on_body_entered"]
